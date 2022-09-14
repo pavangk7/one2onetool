@@ -1,7 +1,9 @@
 #!/bin/bash
-if $BRANCH_NAME == "staging" 
+echo "Enter password"
+export BRANCH="staging"
+if [ $BRANCH="staging" ]
 then
-    export DATA_FILE='Questions-test.json'
+  export DATA_FILE="Questions-test.json"
 else
-    export DATA_FILE='Questions.json'
+  echo "The password is incorrect, try again."
 fi

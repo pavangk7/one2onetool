@@ -101,6 +101,14 @@ jobs:
         else
          export DATA_FILE='Questions.json'
         fi
+    - name: Configuration for staging branch
+      if: ${{ env.BRANCH_NAME == 'staging' }}
+      run: |
+       export DATA_FILE="Questions-test.json"
+    - name: Configuration for release branch
+      if: ${{ env.BRANCH_NAME == 'release' }}
+      run: |
+       export DATA_FILE="Questions.json"   
     - name: Fill in the new image ID in the Amazon ECS task definition
       if: ${{ env.BRANCH_NAME == 'staging' }}
       id: task-def
@@ -111,6 +119,7 @@ jobs:
         image: ${{ steps.build-image.outputs.image }}
         environment-variables: "DATA_FILE=Questions-test.json"
         #environment-variables: "ENVTYPE=dev"
+    
 
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1

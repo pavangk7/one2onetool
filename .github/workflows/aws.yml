@@ -104,11 +104,11 @@ jobs:
     - name: Configuration for staging branch
       if: ${{ env.BRANCH_NAME == 'staging' }}
       run: |
-       echo "DATAFILE={{ secrets.STAGING }}" >> $GITHUB_ENV    
+       echo "DATAFILE=${{ secrets.STAGING }}" >> $GITHUB_ENV    
     - name: Configuration for release branch
       if: ${{ env.BRANCH_NAME == 'release' }}
       run: |
-       echo "DATAFILE={{ secrets.RELEASE }}" >> $GITHUB_ENV
+       echo "DATAFILE=${{ secrets.RELEASE }}" >> $GITHUB_ENV
 
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def
@@ -118,6 +118,7 @@ jobs:
         container-name: ${{ env.CONTAINER_NAME }}
         image: ${{ steps.build-image.outputs.image }}
         environment-variables: "BRANCH_NAME=${{ env.BRANCH_NAME }}"
+        environment-variables: "DATA_FILE=${{ env.DATAFILE }}"
         #environment-variables: "ENVTYPE=dev"
     
 

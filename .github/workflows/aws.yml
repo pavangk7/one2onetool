@@ -109,7 +109,8 @@ jobs:
     - name: Configuration for release branch
       if: ${{ env.BRANCH_NAME == 'release' }}
       run: |
-       echo "DATA_FILE=Questions.json" >> $GITHUB_ENV    
+       echo "DATA_FILE=Questions.json" >> $GITHUB_ENV   
+        
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1

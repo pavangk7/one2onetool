@@ -104,20 +104,20 @@ jobs:
     - name: Configuration for staging branch
       if: ${{ env.BRANCH_NAME == 'staging' }}
       run: |
+       echo "DATA_FILE=Questions-test.json" >> $GITHUB_ENV    
        export DATA_FILE="Questions-test.json"
     - name: Configuration for release branch
       if: ${{ env.BRANCH_NAME == 'release' }}
       run: |
-       export DATA_FILE="Questions.json"   
+       echo "DATA_FILE=Questions.json" >> $GITHUB_ENV    
     - name: Fill in the new image ID in the Amazon ECS task definition
-      if: ${{ env.BRANCH_NAME == 'staging' }}
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
         task-definition: ${{ env.ECS_TASK_DEFINITION }}
         container-name: ${{ env.CONTAINER_NAME }}
         image: ${{ steps.build-image.outputs.image }}
-        environment-variables: "DATA_FILE=Questions-test.json"
+        environment-variables: {{ env.DATA_FILE }}
         #environment-variables: "ENVTYPE=dev"
     
 

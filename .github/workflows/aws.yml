@@ -118,7 +118,6 @@ jobs:
         container-name: ${{ env.CONTAINER_NAME }}
         image: ${{ steps.build-image.outputs.image }}
         environment-variables: "BRANCH_NAME=${{ env.BRANCH_NAME }}"
-        environment-variables: "DATA_FILES=${{ env.DATAFILE }}"
         #environment-variables: "ENVTYPE=dev"
     
 

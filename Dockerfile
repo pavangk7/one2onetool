@@ -10,8 +10,6 @@ WORKDIR /usr/src/app
 # where available (npm@5+)
 COPY package*.json ./
 
-RUN npm install
-RUN npm run test
 # If you are building your code for production
 # RUN npm ci --only=production
 
@@ -19,6 +17,5 @@ RUN npm run test
 COPY . .
 
 EXPOSE 3000
-RUN echo $ENVTYPE
 #ENTRYPOINT [ "npm","run",$ENVTYPE ]
 ENTRYPOINT ["bash","/usr/src/app/startup.sh"]

@@ -4,4 +4,4 @@ set -x
 
 # exec container command
 echo $ENVTYPE
-exec npm run $ENVTYPE
+exec npm start $DATA_FILE

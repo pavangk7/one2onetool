@@ -90,7 +90,17 @@ jobs:
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-
+    - name: get the environment data file
+      id: get-datafile
+      shell: bash
+      run: | 
+        #!/bin/bash
+        if [ $env.BRANCH_NAME = "staging" ]
+        then
+         export DATA_FILE='Questions-test.json'
+        else
+         export DATA_FILE='Questions.json'
+        fi
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
@@ -98,7 +108,7 @@ jobs:
         task-definition: ${{ env.ECS_TASK_DEFINITION }}
         container-name: ${{ env.CONTAINER_NAME }}
         image: ${{ steps.build-image.outputs.image }}
-        environment-variables: "ENVTYPE=${{ env.BRANCH_NAME }}"
+        environment-variables: "DATA_FILE=${{ env.DATA_FILE }}"
         #environment-variables: "ENVTYPE=dev"
 
     - name: Deploy Amazon ECS task definition

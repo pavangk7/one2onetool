@@ -4,7 +4,9 @@ IP=$(ip route show |grep -o src.* |cut -f2 -d" ")
 #BRANCH_NAME="staging"
 # kubernetes sets routes differently -- so we will discover our IP differently
 if [[ ${BRANCH_NAME} == "staging" ]]; then
-  exec npm start DATA_FILE="Questions-test.json"
+  echo $BRANCH_NAME
+  export DATA_FILE="Questions-test.json"
+  exec npm start $DATA_FILE
 else
   exec npm start
 fi

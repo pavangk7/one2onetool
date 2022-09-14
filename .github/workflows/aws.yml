@@ -117,7 +117,7 @@ jobs:
         task-definition: ${{ env.ECS_TASK_DEFINITION }}
         container-name: ${{ env.CONTAINER_NAME }}
         image: ${{ steps.build-image.outputs.image }}
-        environment-variables: "DATA_FILE={{ env.DATAFILE }}"
+        environment-variables: "{{ env.DATAFILE }}"
         #environment-variables: "ENVTYPE=dev"
     
 

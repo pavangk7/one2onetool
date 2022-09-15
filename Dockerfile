@@ -16,6 +16,4 @@ RUN npm  install
 # Bundle app source
 COPY . .
 EXPOSE 3000
-RUN echo $ENVTYPE
-#ENTRYPOINT [ "npm","run",$ENVTYPE ]
 ENTRYPOINT ["bash","/usr/src/app/startup.sh"]

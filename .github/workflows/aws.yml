@@ -45,7 +45,7 @@ permissions:
 
 jobs:
 
-  jobs:
+
   build:
     runs-on: ubuntu-latest
     strategy:

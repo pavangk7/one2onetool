@@ -114,11 +114,11 @@ jobs:
     - name: Configuration for staging branch
       if: ${{ env.BRANCH_NAME == 'staging' }}
       run: |
-       echo "DATAFILE=${{ secrets.STAGING }}" >> $GITHUB_ENV    
+       echo "Cluster=${{ secrets.STAGING }}" >> $GITHUB_ENV    
     - name: Configuration for release branch
       if: ${{ env.BRANCH_NAME == 'release' }}
       run: |
-       echo "DATAFILE=${{ secrets.RELEASE }}" >> $GITHUB_ENV
+       echo "Cluster=master" >> $GITHUB_ENV
 
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def
@@ -136,5 +136,6 @@ jobs:
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
         service: ${{ env.ECS_SERVICE }}
-        cluster: ${{ env.ECS_CLUSTER }}-${{ env.BRANCH_NAME }}
+        #cluster: ${{ env.ECS_CLUSTER }}-${{ env.BRANCH_NAME }}
+        cluster: ${{ env.ECS_CLUSTER }}-${{ env.Cluster }}
         wait-for-service-stability: true

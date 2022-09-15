@@ -98,7 +98,7 @@ jobs:
     
     - name: Get the version
       id: vars
-      run: echo ::set-output name=tag::$(echo ${GITHUB_SHA})
+      run: echo ::set-output name=tag::$(echo ${BRANCH_NAME})
     
     - name: Build, tag, and push image to Amazon ECR
       #if: ${{ env.BRANCH_NAME == 'staging' }}

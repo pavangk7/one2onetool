@@ -69,9 +69,7 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     environment: production
-
     steps:
-
     - name: Checkout
       uses: actions/checkout@v3
     
@@ -81,11 +79,15 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_REGION }}
-
+    
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
-
+    
+    - name: Get the version
+      id: vars
+      run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
+    
     - name: Build, tag, and push image to Amazon ECR
       #if: ${{ env.BRANCH_NAME == 'staging' }}
       id: build-image
@@ -97,9 +99,9 @@ jobs:
         # Build a docker container and
         # push it to ECR so that it can
         # be deployed to ECS.
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${{steps.vars.outputs.tag}} .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{steps.vars.outputs.tag}}
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:${{steps.vars.outputs.tag}}"
     - name: get the environment data file
       id: get-datafile
       shell: bash
@@ -136,6 +138,5 @@ jobs:
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
         service: ${{ env.ECS_SERVICE }}
-        #cluster: ${{ env.ECS_CLUSTER }}-${{ env.BRANCH_NAME }}
         cluster: ${{ env.ECS_CLUSTER }}-${{ env.Cluster }}
         wait-for-service-stability: true

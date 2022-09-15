@@ -112,7 +112,6 @@ jobs:
         # push it to ECR so that it can
         # be deployed to ECS.
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${{steps.vars.outputs.tag}} .
-        docker scan $ECR_REGISTRY/$ECR_REPOSITORY:${{steps.vars.outputs.tag}} 
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{steps.vars.outputs.tag}}
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:${{steps.vars.outputs.tag}}"
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .

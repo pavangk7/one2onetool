@@ -114,6 +114,9 @@ jobs:
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${{steps.vars.outputs.tag}} .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{steps.vars.outputs.tag}}
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:${{steps.vars.outputs.tag}}"
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+
     - name: get the environment data file
       id: get-datafile
       shell: bash

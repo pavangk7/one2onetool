@@ -114,7 +114,7 @@ jobs:
     - name: Configuration for staging branch
       if: ${{ env.BRANCH_NAME == 'staging' }}
       run: |
-       echo "Cluster=STAGING" >> $GITHUB_ENV    
+       echo "Cluster=staging" >> $GITHUB_ENV    
     - name: Configuration for release branch
       if: ${{ env.BRANCH_NAME == 'release' }}
       run: |

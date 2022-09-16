@@ -31,7 +31,7 @@ https://github.com/pavangk7/one2onetool/actions/runs/3060224623
 #
 # d)if the branch staging it will trigger the pipeline with staging task defination of input DATA_FILE with Questions-test.json other wise will    # # #trigger # the with DATA_FILE of Questions.json
 #after sucessfull deployment url can  access using public ip 
-#  Staging ip: http://52.3.221.24:3000
-#  Release ip: http://54.90.120.224:3000
+#  Staging ip: http://52.3.221.24:3000/
+#  Release ip: http://54.90.120.224:3000/
 
 github url: https://github.com/pavangk7/one2onetool
